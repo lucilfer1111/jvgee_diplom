@@ -169,7 +169,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                           ),
                           Expanded(
                             child: _buildBreakdownItem(
-                              'Дансан дах үлдэгдэл',
+                              'Хөрөнгө оруулаагүй',
                               '${portfolioProvider.cashBalance.toStringAsFixed(2)}\₮',
                               '${cashPercentage.toStringAsFixed(1)}%',
                             ),
@@ -296,7 +296,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Нийт багцын үнэ',
+            'Нийт багцын үнэлгээ',
             style: TextStyle(
               fontSize: 16,
               color: Theme.of(context).hintColor,
@@ -320,7 +320,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                   style: TextStyle(fontSize: 16),
                 ),
                 Text(
-                  '${isPositive ? '+' : ''}\₮${overallGainLoss.toStringAsFixed(2)} (${isPositive ? '+' : ''}${overallGainLossPercent.toStringAsFixed(2)}%)',
+                  '${isPositive ? '+' : ''}${overallGainLoss.toStringAsFixed(2)}\₮ (${isPositive ? '+' : ''}${overallGainLossPercent.toStringAsFixed(2)}%)',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -342,7 +342,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
               _buildKpiItem('Holdings', '${portfolioProvider.holdings.length}'),
               _buildKpiItem('Хөрөнгө оруулсан',
                   '${(totalValue - portfolioProvider.cashBalance).toStringAsFixed(2)}\₮'),
-              _buildKpiItem('Дансан дах үлдэгдэл',
+              _buildKpiItem('Үлдэгдэл',
                   '${portfolioProvider.cashBalance.toStringAsFixed(2)}\₮'),
             ],
           ),
@@ -469,7 +469,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                 children: [
                   _buildLegendItem('Хөрөнгө оруулсан', Colors.black),
                   SizedBox(width: 24),
-                  _buildLegendItem('Дансан дах үлдэгдэл', Colors.grey[300]!),
+                  _buildLegendItem('Үлдэгдэл', Colors.grey[300]!),
                 ],
               ),
             ],
@@ -570,7 +570,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
       children: [
         _buildCashCard(portfolioProvider),
         SizedBox(height: 16),
-        Text('Таны хөрөнгө орууалалт',
+        Text('Таны хөрөнгө оруулалт',
             style: Theme.of(context).textTheme.titleLarge),
         SizedBox(height: 8),
         ...portfolioProvider.holdings
@@ -958,7 +958,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 _buildAssetDetailItem(
-                    'Хуььцаа', '${holding.quantity.toStringAsFixed(2)}'),
+                    'Хувьцаа', '${holding.quantity.toStringAsFixed(2)}'),
                 _buildAssetDetailItem(
                     'Ханш', '${currentValue.toStringAsFixed(2)}\₮'),
                 _buildAssetDetailItem(
@@ -989,7 +989,6 @@ class _PortfolioScreenState extends State<PortfolioScreen>
               decoration: InputDecoration(
                 labelText: 'Дүн (\₮)',
                 border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.attach_money),
               ),
               keyboardType: TextInputType.numberWithOptions(decimal: true),
             ),
@@ -1027,7 +1026,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>
                 );
               }
             },
-            child: Text('Add Cash'),
+            child: Text('Нэмэх'),
           ),
         ],
       ),

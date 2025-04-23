@@ -107,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
           NavigationDestination(
             icon: Icon(Icons.auto_awesome_outlined),
             selectedIcon: Icon(Icons.auto_awesome),
-            label: 'AI Багц',
+            label: 'Санал болгох багц',
           ),
           NavigationDestination(
             icon: Icon(Icons.settings_outlined),

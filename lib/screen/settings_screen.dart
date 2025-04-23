@@ -23,7 +23,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool _enableMarketAlerts = true;
   bool _enablePortfolioUpdates = true;
   String _refreshInterval = '15 minutes';
-  String _selectedCurrency = 'USD';
+  String _selectedCurrency = 'MNT';
   TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
 
@@ -72,7 +72,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       _refreshInterval = prefs.getString('refresh_interval') ?? '15 minutes';
 
       // Load currency
-      _selectedCurrency = prefs.getString('currency') ?? 'MNT';
+      _selectedCurrency = prefs.getString('currency') ?? 'USD';
 
       // Load user info
       _nameController.text = prefs.getString('userName') ?? '';
@@ -163,6 +163,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   // Save user profile
+
   Future<void> _saveUserProfile() async {
     try {
       if (_formKey.currentState!.validate()) {
@@ -303,7 +304,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                   // Appearance Settings
                   Text(
-                    'Харагдац',
+                    'Appearance',
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   SizedBox(height: 16.0),
@@ -380,7 +381,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                   // Notification Settings
                   Text(
-                    'Мэдэгэдэл',
+                    'Мэдэгдэл',
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   SizedBox(height: 16.0),
@@ -393,7 +394,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SwitchListTile(
-                            title: Text('Enable Мэдэгдэл'),
+                            title: Text('Enable Notifications'),
                             subtitle: Text(_enableNotifications
                                 ? 'Та аппликейшнаас мэдэгдэл хүлээн авах болно'
                                 : 'Бүх мэдэгдэл идэвхгүй байна'),
@@ -500,7 +501,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           ),
                                           SizedBox(height: 4.0),
                                           Text(
-                                            'Валютаа сонгоно уу',
+                                            'Ашиглха валютаа сонгоно уу',
                                             style: TextStyle(
                                                 fontSize: 14.0,
                                                 color: Colors.grey.shade600),
@@ -639,12 +640,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            'Өгөгдөл сэргээх интервал',
+                                            'Өгөгдөл рэфреш интервал',
                                             style: TextStyle(fontSize: 16.0),
                                           ),
                                           SizedBox(height: 4.0),
                                           Text(
-                                            'Зах зээлийн мэдээллийг хэр олон удаа шинэчлэх вэ',
+                                            'Та мэдээллийг хэдэн минут тутам шинэчлэх вэ',
                                             style: TextStyle(
                                                 fontSize: 14.0,
                                                 color: Colors.grey.shade600),
@@ -722,7 +723,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                           SizedBox(height: 8.0),
                           Text(
-                            'When enabled, the app will use locally generated mock data instead of making API calls. This is useful for testing or when you have limited internet connectivity.',
+                            'Идэвхжүүлсэн үед апп нь API дуудлага хийхийн оронд дотооддоо үүсгэсэн хуурамч өгөгдлийг ашиглана. Энэ нь тест хийх эсвэл интернетийн холболт хязгаарлагдмал үед хэрэг болно.',
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.grey.shade700,
@@ -753,7 +754,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   SizedBox(width: 8.0),
                                   Expanded(
                                     child: Text(
-                                      'Mock data mode is enabled. The app will show simulated data.',
+                                      'Mock data горим идэвхижсэн. The app will show simulated data.',
                                       style: TextStyle(
                                           color: Colors.orange.shade800),
                                     ),
@@ -809,8 +810,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     SizedBox(height: 4.0),
                                     Text(
                                       isConnected
-                                          ? 'You have an active internet connection. The app can fetch real-time data.'
-                                          : 'No internet connection detected. The app will use cached or mock data.',
+                                          ? 'Та интернетэд холболттой байна. Бодит цагийн өгөгдлийг татаж авах боломжтой.'
+                                          : 'Интернэт холболтгүй байна. Апп нь кэш эсвэл mock data ашиглах болно.',
                                       style: TextStyle(
                                         color: isConnected
                                             ? Colors.green.shade700
@@ -861,12 +862,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: 8.0),
                             child: Text(
-                              'шутис дипломны ажил',
+                              'шутис дипломны ажил.',
                             ),
                           ),
                           SizedBox(height: 8.0),
                           Text(
-                            '© 2025 3 23',
+                            '© 2023 4 23',
                             style: TextStyle(
                               color: Colors.grey.shade700,
                               fontSize: 12,

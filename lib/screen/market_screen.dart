@@ -30,16 +30,11 @@ class _MarketScreenState extends State<MarketScreen>
 
   // List of tradable stocks
   final List<Map<String, dynamic>> tradableStocks = [
-    {'symbol': 'MNHD', 'shares': 100, 'avgPrice': 1200.0},
-    {'symbol': 'APL', 'shares': 50, 'avgPrice': 900.0},
-    {'symbol': 'BNGO', 'shares': 80, 'avgPrice': 1400.0},
-    {'symbol': 'TAVI', 'shares': 70, 'avgPrice': 2500.0},
-    {'symbol': 'ELC', 'shares': 60, 'avgPrice': 1800.0},
-    {'symbol': 'KIC', 'shares': 120, 'avgPrice': 3000.0},
-    {'symbol': 'ARX', 'shares': 90, 'avgPrice': 5000.0},
-    {'symbol': 'HAN', 'shares': 40, 'avgPrice': 2200.0},
-    {'symbol': 'GOGO', 'shares': 30, 'avgPrice': 4500.0},
-    {'symbol': 'MTS', 'shares': 200, 'avgPrice': 1500.0}
+    {'symbol': 'AAPL', 'name': 'Apple Inc.', 'price': 180.0},
+    {'symbol': 'MSFT', 'name': 'Microsoft Corporation', 'price': 350.0},
+    {'symbol': 'GOOGL', 'name': 'Alphabet Inc.', 'price': 140.0},
+    {'symbol': 'AMZN', 'name': 'Amazon.com Inc.', 'price': 130.0},
+    {'symbol': 'TSLA', 'name': 'Tesla, Inc.', 'price': 200.0},
   ];
 
   // List of tradable crypto
@@ -99,7 +94,7 @@ class _MarketScreenState extends State<MarketScreen>
           });
         }
       } catch (e) {
-        print('Error fetching Зах зээлийн мэдээ: $e');
+        print('Error fetching market news: $e');
         // Don't set global error for news failure
       }
     } catch (e) {
@@ -109,7 +104,7 @@ class _MarketScreenState extends State<MarketScreen>
           isLoading = false;
         });
       }
-      print('Error initializing Зах зээлийн мэдээ: $e');
+      print('Error initializing market data: $e');
     }
   }
 
@@ -161,7 +156,7 @@ class _MarketScreenState extends State<MarketScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Зах зээлийн мэдээ'),
+        title: Text('Зах зээлийн сүүлийн үеийн мэдээ'),
         bottom: TabBar(
           controller: _tabController,
           tabs: [
@@ -284,7 +279,7 @@ class _MarketScreenState extends State<MarketScreen>
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Text(
-                  'Нийтлэг Хувьцаанууд',
+                  'Нийтлэг хувьцаа',
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),
@@ -347,13 +342,13 @@ class _MarketScreenState extends State<MarketScreen>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'APU Company.',
+                    'Apple Inc.',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   SizedBox(height: 8),
                   Expanded(
                     child: TradingViewMobileWidget(
-                      symbol: 'APU',
+                      symbol: 'AAPL',
                       isStockChart: true,
                       useMockData: isMockData,
                       liveData: liveMarketData,
@@ -395,7 +390,7 @@ class _MarketScreenState extends State<MarketScreen>
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Text(
-                  'Крипто',
+                  'Криптовалют',
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),
@@ -407,9 +402,9 @@ class _MarketScreenState extends State<MarketScreen>
         if (index > 0 && index <= tradableCrypto.length) {
           final crypto = tradableCrypto[index - 1];
           return _buildTradableAssetCard(
-            symbol: crypto['тэмдэг'],
-            name: crypto['нэр'],
-            price: crypto['үнэ'],
+            symbol: crypto['symbol'],
+            name: crypto['name'],
+            price: crypto['price'],
             isStock: false,
           );
         }
@@ -490,7 +485,7 @@ class _MarketScreenState extends State<MarketScreen>
                 children: [
                   Icon(Icons.inbox, size: 48, color: Colors.grey),
                   SizedBox(height: 16),
-                  Text('Зах зээлийн мэдээ байхгүй байна'),
+                  Text('ах зээлийн мэдээ байхгүй байна'),
                   SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () async {
@@ -510,13 +505,13 @@ class _MarketScreenState extends State<MarketScreen>
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content:
-                                Text('Failed to load мэдээ: ${e.toString()}'),
+                                Text('Failed to load news: ${e.toString()}'),
                             backgroundColor: Colors.red,
                           ),
                         );
                       }
                     },
-                    child: Text('Reload мэдээ'),
+                    child: Text('Дахин ачааллах'),
                   ),
                 ],
               ),
@@ -536,14 +531,14 @@ class _MarketScreenState extends State<MarketScreen>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Зах зээлийн мэдээ',
+                  'Зах зээлийн сүүлийн үеийн мэдээ',
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 if (lastUpdated.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.only(top: 4.0),
                     child: Text(
-                      'Сүүлд шинжэчлэгдсэн: $lastUpdated${isMockData ? ' (Demo)' : ''}',
+                      'Сүүлд шинэчлэгдсэн: $lastUpdated${isMockData ? ' (Demo)' : ''}',
                       style: TextStyle(
                         fontSize: 12,
                         fontStyle: FontStyle.italic,
@@ -613,7 +608,7 @@ class _MarketScreenState extends State<MarketScreen>
                 // Open URL if available
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text('Нийтлэлийг нээх...'),
+                    content: Text('Opening article...'),
                     duration: Duration(seconds: 1),
                   ),
                 );
@@ -757,16 +752,16 @@ class _MarketScreenState extends State<MarketScreen>
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Одоогийн ханш: ${currentPrice.toStringAsFixed(2)}\₮'),
+            Text('Одоогийн ханш: \$${currentPrice.toStringAsFixed(2)}'),
             SizedBox(height: 8),
             Text(isBuy
-                ? 'Боломжит үлдэгдэл: ${portfolioProvider.cashBalance.toStringAsFixed(2)}\₮'
-                : 'Одоогийн эзэмшил: ${_getQuantityOwned(portfolioProvider, symbol).toStringAsFixed(2)} хувьцаа'),
+                ? 'Дансны үлдэгдэл: \$${portfolioProvider.cashBalance.toStringAsFixed(2)}'
+                : 'Одоогийн Holdings: ${_getQuantityOwned(portfolioProvider, symbol).toStringAsFixed(2)} shares'),
             SizedBox(height: 16),
             TextField(
               controller: quantityController,
               decoration: InputDecoration(
-                labelText: 'Ширхэгийг ${isBuy ? 'зарах' : 'авах'}',
+                labelText: 'ширхэгийг ${isBuy ? 'авах' : 'зарах'}',
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -781,12 +776,12 @@ class _MarketScreenState extends State<MarketScreen>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Нийт хөрөнгө: ${totalValue.toStringAsFixed(2)}\₮',
+                      'Нийт үнэ: \$${totalValue.toStringAsFixed(2)}',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     if (isBuy && quantity > 0)
                       Text(
-                        'Үлдэгдэл: ${(portfolioProvider.cashBalance - totalValue).toStringAsFixed(2)}\₮',
+                        'Үлдэгдэл: \$${(portfolioProvider.cashBalance - totalValue).toStringAsFixed(2)}',
                         style: TextStyle(
                           color: portfolioProvider.cashBalance >= totalValue
                               ? Colors.green
@@ -817,7 +812,7 @@ class _MarketScreenState extends State<MarketScreen>
 
               if (quantity <= 0) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Тоо хэмжээгээ оруулна уу')));
+                    SnackBar(content: Text('Please enter a valid quantity')));
                 return;
               }
 
@@ -836,8 +831,7 @@ class _MarketScreenState extends State<MarketScreen>
                         children: [
                           CircularProgressIndicator(),
                           SizedBox(width: 20),
-                          Text(
-                              '${isBuy ? 'Худалдан авах' : 'Зарах'} боловсруулж байна...'),
+                          Text('Processing ${isBuy ? 'purchase' : 'sale'}...'),
                         ],
                       ),
                     ),
@@ -877,8 +871,8 @@ class _MarketScreenState extends State<MarketScreen>
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(isBuy
-                            ? 'Энэ худалдан авалтыг хйихэд дансны үлдэгдэл хүрэлцэхгүй байна'
-                            : 'Зарахад хувьцааны үлдэгдэл хүрэлцэхгүй байна '),
+                            ? 'Insufficient funds to complete this purchase'
+                            : 'Insufficient shares to complete this sale'),
                         backgroundColor: Colors.red,
                       ),
                     );

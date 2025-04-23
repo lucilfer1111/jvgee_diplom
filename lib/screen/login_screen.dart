@@ -27,10 +27,16 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     try {
+      final email = _emailController.text.trim();
+      final password = _passwordController.text.trim();
+
+      debugPrint('Attempting login with email: $email');
+      debugPrint('Password length: ${password.length}');
+
       final userCredential =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
       );
 
       // Check if email is verified
@@ -246,6 +252,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if (value == null || value.isEmpty) {
           return 'Please enter your email';
         }
+        value=value.trim();
         if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
           return 'Enter a valid email address';
         }

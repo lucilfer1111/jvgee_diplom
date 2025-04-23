@@ -160,15 +160,15 @@ class _AIAdvisorScreenState extends State<AIAdvisorScreen> {
     if (recommendation == null) return Colors.grey;
 
     switch (recommendation.toLowerCase()) {
-      case 'авсан нь зүгээр':
+      case 'strong buy':
         return Colors.green.shade800;
-      case 'авах':
+      case 'buy':
         return Colors.green;
-      case 'үргэлжлүүлэн эзэмших':
+      case 'hold':
         return Colors.orange;
-      case 'зарах':
+      case 'sell':
         return Colors.red;
-      case 'яаралтай зарах':
+      case 'strong sell':
         return Colors.red.shade800;
       default:
         return Colors.grey;
@@ -224,7 +224,7 @@ class _AIAdvisorScreenState extends State<AIAdvisorScreen> {
                   builder: (context) => AIChatbotScreen(),
                 ),
               ),
-              tooltip: 'Хиймэл оюун чатбот',
+              tooltip: 'Хиймэл оюун зөвлөхтэй чатлах',
             ),
           ],
         ),
@@ -281,7 +281,7 @@ class _AIAdvisorScreenState extends State<AIAdvisorScreen> {
           IconButton(
             icon: Icon(Icons.refresh),
             onPressed: _loadData,
-            tooltip: 'Refresh огноо',
+            tooltip: 'Refresh data',
           ),
           IconButton(
             icon: Icon(Icons.chat),
@@ -291,7 +291,7 @@ class _AIAdvisorScreenState extends State<AIAdvisorScreen> {
                 builder: (context) => AIChatbotScreen(),
               ),
             ),
-            tooltip: 'Хиймэл оюунт чатбот',
+            tooltip: 'Хиймэл оюун зөвлөхтэй чатлах',
           ),
         ],
       ),
@@ -309,7 +309,7 @@ class _AIAdvisorScreenState extends State<AIAdvisorScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      'Багцын Health Score',
+                      'Багцийн Health Score',
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                     SizedBox(height: 16),
@@ -351,12 +351,12 @@ class _AIAdvisorScreenState extends State<AIAdvisorScreen> {
                             children: [
                               Text(
                                 _portfolioHealthScore >= 80
-                                    ? 'Маш сайн'
+                                    ? 'Excellent'
                                     : _portfolioHealthScore >= 70
-                                        ? 'Сайн'
+                                        ? 'Good'
                                         : _portfolioHealthScore >= 60
-                                            ? 'Дунд'
-                                            : 'Анхаарах хэрэгтэй',
+                                            ? 'Fair'
+                                            : 'Needs Attention',
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -366,12 +366,12 @@ class _AIAdvisorScreenState extends State<AIAdvisorScreen> {
                               SizedBox(height: 8),
                               Text(
                                 _portfolioHealthScore >= 80
-                                    ? 'Your portfolio is well-diversified and balanced.'
+                                    ? 'Таны багц сайн бүтэцтэй,тэнцвэртэй байна.'
                                     : _portfolioHealthScore >= 70
-                                        ? 'Your portfolio is performing well but has room for improvement.'
+                                        ? 'Таны багц сайн бүтэцтэй хэдий ч сайжруулах боломжтой.'
                                         : _portfolioHealthScore >= 60
-                                            ? 'Your portfolio needs some adjustments to improve performance.'
-                                            : 'Your portfolio requires significant rebalancing.',
+                                            ? 'Гүйцэтгэлийг сайжруулахын тулд таны багцад зарим зохицуулалт шаардлагатай.'
+                                            : 'Таны багцийн бүтцийг дахин сайжруулах хэрэгтэй.',
                                 style: TextStyle(fontSize: 14),
                               ),
                             ],
@@ -388,7 +388,7 @@ class _AIAdvisorScreenState extends State<AIAdvisorScreen> {
 
             // Stock Recommendations
             Text(
-              'Хувьцаа санал болголт',
+              'Санал болгож буй хувьцаа',
               style: Theme.of(context).textTheme.titleLarge,
             ),
             SizedBox(height: 8),
@@ -415,7 +415,7 @@ class _AIAdvisorScreenState extends State<AIAdvisorScreen> {
                             children: [
                               Expanded(
                                   child: Text(_safeGetString(
-                                      recommendation, 'Нэр', 'Хувьцаа'))),
+                                      recommendation, 'name', 'Stock'))),
                               Container(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 8, vertical: 4),
@@ -440,16 +440,16 @@ class _AIAdvisorScreenState extends State<AIAdvisorScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(height: 4),
-                              Text(_safeGetString(recommendation, 'Шалтгаан',
-                                  'Шалтгаан заагаагүй')),
+                              Text(_safeGetString(recommendation, 'reason',
+                                  'No reason provided')),
                               SizedBox(height: 4),
                               Row(
                                 children: [
                                   Text('Итгэл: '),
                                   Expanded(
                                     child: LinearProgressIndicator(
-                                      value: _safeGetInt(
-                                              recommendation, 'итгэл', 50) /
+                                      value: _safeGetInt(recommendation,
+                                              'confidence', 50) /
                                           100,
                                       backgroundColor: Colors.grey.shade200,
                                       valueColor: AlwaysStoppedAnimation<Color>(
@@ -463,7 +463,7 @@ class _AIAdvisorScreenState extends State<AIAdvisorScreen> {
                                   ),
                                   SizedBox(width: 8),
                                   Text(
-                                    '${_safeGetInt(recommendation, 'итгэл', 50)}%',
+                                    '${_safeGetInt(recommendation, 'confidence', 50)}%',
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
                                   ),
@@ -488,7 +488,7 @@ class _AIAdvisorScreenState extends State<AIAdvisorScreen> {
               Card(
                 child: Padding(
                   padding: EdgeInsets.all(16),
-                  child: Text('Зах зээлийн сануулга байхгүй байна.'),
+                  child: Text('Зах зээлийн сануулга байхгүй байна'),
                 ),
               )
             else
@@ -502,14 +502,14 @@ class _AIAdvisorScreenState extends State<AIAdvisorScreen> {
                                 _safeGetString(alert, 'severity', '')),
                             size: 36,
                           ),
-                          title:
-                              Text(_safeGetString(alert, 'Гарчиг', 'Сануулга')),
+                          title: Text(
+                              _safeGetString(alert, 'гарчигщг', 'сануулга')),
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(height: 4),
                               Text(_safeGetString(
-                                  alert, 'Тайлбар', 'Тайлбар байхгүй байна')),
+                                  alert, 'тайлбар', 'тайлбар байхгүй байна')),
                               SizedBox(height: 8),
                               Wrap(
                                 spacing: 4,
@@ -553,7 +553,7 @@ class _AIAdvisorScreenState extends State<AIAdvisorScreen> {
               Card(
                 child: Padding(
                   padding: EdgeInsets.all(16),
-                  child: Text('Санхүүгийн зөвөлгөө байхгүй байна.'),
+                  child: Text('Санхүүгийн зөвөлгөө байхгүй байна'),
                 ),
               )
             else
@@ -562,29 +562,27 @@ class _AIAdvisorScreenState extends State<AIAdvisorScreen> {
                         margin: EdgeInsets.only(bottom: 8),
                         child: ListTile(
                           leading: Icon(
-                            _safeGetString(tip, 'Каталог', '') ==
-                                    'Хөрөнгө орууалт'
+                            _safeGetString(tip, 'category', '') == 'Investing'
                                 ? Icons.trending_up
-                                : _safeGetString(tip, 'Каталог', '') ==
-                                        'Хадгаламж'
+                                : _safeGetString(tip, 'category', '') ==
+                                        'Savings'
                                     ? Icons.savings
-                                    : _safeGetString(tip, 'Каталог', '') ==
-                                            'Санхүүгийн төлөвлөгөө'
+                                    : _safeGetString(tip, 'category', '') ==
+                                            'Budgeting'
                                         ? Icons.account_balance_wallet
-                                        : _safeGetString(tip, 'Каталог', '') ==
-                                                'Өр зээл'
+                                        : _safeGetString(tip, 'category', '') ==
+                                                'Debt Management'
                                             ? Icons.credit_card
                                             : Icons.lightbulb_outline,
                             color: Colors.blue.shade700,
                           ),
-                          title:
-                              Text(_safeGetString(tip, 'Гарчиг', 'Зөвлөгөө')),
+                          title: Text(_safeGetString(tip, 'title', 'Tip')),
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(height: 4),
                               Text(_safeGetString(
-                                  tip, 'Тайлбар', 'Тайлбар алга')),
+                                  tip, 'тайлбар', 'тайлбар байхгүй байна')),
                               SizedBox(height: 4),
                               Container(
                                 padding: EdgeInsets.symmetric(
@@ -594,7 +592,7 @@ class _AIAdvisorScreenState extends State<AIAdvisorScreen> {
                                   borderRadius: BorderRadius.circular(4),
                                 ),
                                 child: Text(
-                                  _safeGetString(tip, 'Каталог', 'Ерөнхий'),
+                                  _safeGetString(tip, 'category', 'General'),
                                   style: TextStyle(
                                     color: Colors.blue.shade800,
                                     fontSize: 12,

@@ -52,7 +52,7 @@ class _PortfolioSuggestionsScreenState
           ),
           SizedBox(height: 16),
           Text(
-            'Таны санхүүгийн мэдээллийг шинжилж, мэрэгжилийн зөвлөгөө өгөх гэж байгаа юм.',
+            'Таны санхүүгийн мэдээллийг шинжилж, мэрэгжилийн зөвлөгөө өгнө.',
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
@@ -448,14 +448,13 @@ class _PortfolioSuggestionsScreenState
                     icon: Icon(type.toLowerCase() == 'buy'
                         ? Icons.shopping_cart
                         : Icons.sell),
-                    label: Text(type.toLowerCase() == 'buy'
-                        ? 'Go to Buy'
-                        : 'Go to Sell'),
+                    label: Text(type.toLowerCase() == 'buy' ? 'Авах' : 'Зарах'),
                     onPressed: () {
                       // Navigate to market screen with symbol pre-selected
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Navigate to trade screen for $symbol'),
+                          content: Text(
+                              '$symbol-ийн арилжааны дэлгэц рүү шилжиж байна...'),
                           duration: Duration(seconds: 2),
                         ),
                       );
